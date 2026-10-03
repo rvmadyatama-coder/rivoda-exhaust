@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://rivodaexhaust.id/</loc></url>
-<url><loc>https://rivodaexhaust.id/produk-racing.html</loc></url>
-<url><loc>https://rivodaexhaust.id/produk-custom.html</loc></url>
-<url><loc>https://rivodaexhaust.id/produk-harian.html</loc></url>
-<url><loc>https://rivodaexhaust.id/keranjang.html</loc></url>
-<url><loc>https://rivodaexhaust.id/tentang.html</loc></url>
-<url><loc>https://rivodaexhaust.id/kontak.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/</loc></url>
+  <url><loc>https://rivodaexhaust.id/produk-racing.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/produk-custom.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/produk-harian.html</loc></url>
   <url><loc>https://rivodaexhaust.id/produk-detail.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/keranjang.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/tentang.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/kontak.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/panduan-knalpot.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/privasi.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/syarat-ketentuan.html</loc></url>
+  <url><loc>https://rivodaexhaust.id/disclaimer.html</loc></url>
 </urlset>

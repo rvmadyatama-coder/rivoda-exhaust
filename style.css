@@ -223,3 +223,28 @@ footer{margin-top:30px;background:#171717;color:#bbb}.footer-grid{display:grid;g
   .detail-actions{grid-template-columns:1fr}
   .detail-actions button{width:100%}
 }
+
+/* ===== RIVODA EXHAUST PROFESSIONAL REDESIGN 2026 ===== */
+:root{--rv-red:#e30613;--rv-red2:#ff3b30;--rv-black:#090909;--rv-dark:#111318;--rv-card:#fff;--rv-bg:#f5f5f3;--rv-line:#e5e5e1;--rv-muted:#737373;--rv-radius:18px}
+body{background:var(--rv-bg);color:#151515;font-family:Inter,Arial,Helvetica,sans-serif}
+body:before{content:"";display:block;position:fixed;inset:0;pointer-events:none;opacity:.025;background-image:linear-gradient(transparent 95%,#000 96%),linear-gradient(90deg,transparent 95%,#000 96%);background-size:24px 24px;z-index:-1}
+.topline{background:#050505;border-bottom:1px solid #272727}.topline-in{height:36px;color:#bcbcbc}.topline-in>span:first-child{color:#fff;font-weight:900;letter-spacing:1.5px}.top-right a{color:#aaa;transition:.2s}.top-right a:hover{color:#fff}
+.store-header{background:rgba(8,8,8,.97);backdrop-filter:blur(14px);border-bottom:1px solid #292929;box-shadow:0 8px 30px rgba(0,0,0,.16)}
+.head-row{padding:14px 0 12px}.logo{background:#000!important;border:1px solid #292929!important;border-radius:10px!important;box-shadow:0 5px 18px rgba(0,0,0,.2)}
+.search{border-radius:10px!important;background:#fff;padding:3px}.search input{font-size:13px}.search button{background:var(--rv-red);border-radius:8px;padding:0 24px;transition:.2s}.search button:hover{background:#b9040e}
+.cart{color:#fff}.cart b{background:var(--rv-red);color:#fff}
+.category-nav{background:transparent!important;padding:0 0 12px!important;gap:26px;border-radius:0!important;border-top:1px solid #222}.category-nav a{color:#cfcfcf;font-weight:700;font-size:11px;letter-spacing:.3px;padding-top:11px}.category-nav a:first-child{color:#fff}.category-nav a:hover{color:#fff;text-decoration:none}
+.premium-banner{margin-top:22px!important;border-radius:22px!important;box-shadow:0 20px 55px rgba(0,0,0,.2)!important;isolation:isolate}
+.premium-banner:after{display:none!important}
+.premium-banner:before{display:none!important}
+.banner-image{filter:saturate(1.05) contrast(1.03)}
+.banner-hotspot{z-index:5}
+.quick{margin-top:18px!important;border:0!important;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.06)}.quick div{background:#fff;border-right:1px solid var(--rv-line)!important;padding:20px}.quick b{font-size:13px}.quick span{color:#858585}
+.section{margin-top:30px}.section-title{background:transparent!important;padding:0 0 14px!important;border:0!important}.section-title h2{font-size:28px;letter-spacing:-.7px}.eyebrow{color:var(--rv-red)!important;font-weight:950;letter-spacing:2px}.section-title>a{font-weight:800;color:#222}.cats{border:1px solid var(--rv-line);border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.04)}.cat{background:#fff;transition:.2s}.cat:hover{background:#fafafa;transform:translateY(-2px)}.cat-icon{background:#111;color:#fff!important}.cat b{font-size:14px}.cat span{color:#858585}
+.sale{border-top:0!important;border-radius:20px;box-shadow:0 16px 45px rgba(0,0,0,.14);background:linear-gradient(135deg,#080808,#1a1a1d);margin-top:32px}.sale-head{padding:25px 28px}.sale-kicker{color:#ff515b}.sale-head h2{font-size:26px}.sale-head>a{color:#fff;font-weight:800}.sale-body{padding:25px 28px}.sale-body img{border-radius:14px}.price-big{color:#fff!important}.btn.primary,.actions button:last-child{background:var(--rv-red)!important;border-color:var(--rv-red)!important}.btn.primary:hover,.actions button:last-child:hover{background:#b9040e!important}
+.product-title-head{margin-bottom:0}.product-title-head select{border-radius:10px;border:1px solid #d8d8d5;padding:11px 14px;background:#fff}.products{gap:14px}.card{border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid #e8e8e5;box-shadow:none}.card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.11)}.card-img{background:#f1f1ef}.card-body{padding:13px}.card-name{font-weight:800}.price{color:var(--rv-red)!important}.meta{border-top:1px solid #eee;padding-top:7px}.actions button{border-radius:8px!important;font-weight:800}
+.feature-band{border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.05);border:1px solid var(--rv-line);background:#fff}.feature-band div{padding:22px}.info-card{border-radius:20px!important;border:1px solid var(--rv-line)!important;box-shadow:0 12px 35px rgba(0,0,0,.06)}
+footer{margin-top:55px;background:#070707;color:#aaa;border-top:3px solid var(--rv-red)}.footer-grid{padding:48px 0 35px}.footer-grid h4{color:#fff}.footer-grid a{color:#999}.footer-grid a:hover{color:#fff}.copyright{border-top-color:#222;color:#666}
+.wa-float{background:#16b95f!important;box-shadow:0 10px 28px rgba(0,0,0,.25)}
+@media(max-width:760px){.premium-banner:after{padding:55px 20px 18px;font-size:25px}.premium-banner:before{right:14px;bottom:14px;font-size:8px;padding:8px 10px}.section-title h2{font-size:21px}.quick{border-radius:12px}.quick div{padding:14px}.cats{border-radius:14px}.sale{border-radius:15px}.sale-head,.sale-body{padding:17px}.card{border-radius:12px}.products{gap:8px}}
+@media(max-width:480px){.premium-banner:after{font-size:21px}.premium-banner:before{display:none}.section{margin-top:24px}.section-title h2{font-size:19px}.sale-head h2{font-size:19px}}

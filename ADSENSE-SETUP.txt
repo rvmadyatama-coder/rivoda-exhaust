@@ -1,0 +1,12 @@
+RIVODA EXHAUST — AdSense setup
+
+Website sudah disiapkan untuk integrasi AdSense, tetapi Publisher ID belum dimasukkan agar tidak ada ID palsu.
+
+Setelah akun AdSense aktif/siap:
+1. Tambahkan https://rivodaexhaust.id/ di AdSense > Sites.
+2. Salin kode AdSense resmi yang diberikan Google.
+3. Berikan Publisher ID (format ca-pub-XXXXXXXXXXXXXXXX) kepada admin/pembuat website untuk dipasang di semua halaman yang diperlukan.
+4. Buat/upload ads.txt sesuai nilai yang diberikan AdSense.
+5. Di AdSense lakukan Verify lalu Request review.
+
+Jangan mengganti contoh ca-pub dengan ID acak.
