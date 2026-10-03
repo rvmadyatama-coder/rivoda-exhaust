@@ -13,7 +13,7 @@ function renderProducts(){
  const q=(document.getElementById("searchInput")?.value||"").toLowerCase().trim();
  let list=products.filter(p=>(filter==="Semua"||(p.category===filter)||p.tags?.includes(filter))&&(!q||(p.name+" "+p.category+" "+p.desc+" "+p.sku+" "+p.tags.join(" ")).toLowerCase().includes(q)));
  const sort=document.getElementById("sortSelect")?.value;if(sort==="low")list.sort((a,b)=>a.price-b.price);if(sort==="high")list.sort((a,b)=>b.price-a.price);if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
- grid.innerHTML=list.map(p=>`<article class="card" onclick="openProduct(${p.id})"><div class="card-img"><img src="${p.image}" alt="${p.name}" loading="lazy"><span class="badge">${p.images.length} FOTO</span></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-desc">${p.desc}</div><div class="price">${rupiah(p.price)}</div><div class="meta"><span>★ ${p.rating}</span><span>${p.sold} terjual</span><span>Stok ${p.stock}</span></div><div class="actions"><button onclick="event.stopPropagation();addToCart(${p.id})">+ Keranjang</button><button onclick="event.stopPropagation();buyNow(${p.id})">Beli</button></div></div></article>`).join("");
+ grid.innerHTML=list.map(p=>`<article class="card" onclick="openProduct(${p.id})"><div class="card-img"><img src="./${p.image}" alt="${p.name}" loading="eager"><span class="badge">${p.images.length} FOTO</span></div><div class="card-body"><div class="card-name">${p.name}</div><div class="card-desc">${p.desc}</div><div class="price">${rupiah(p.price)}</div><div class="meta"><span>★ ${p.rating}</span><span>${p.sold} terjual</span><span>Stok ${p.stock}</span></div><div class="actions"><button onclick="event.stopPropagation();addToCart(${p.id})">+ Keranjang</button><button onclick="event.stopPropagation();buyNow(${p.id})">Beli</button></div></div></article>`).join("");
  document.getElementById("emptyState")?.classList.toggle("hidden",list.length!==0)
 }
 function setFilter(v){filter=v;const box=document.getElementById("activeFilter"),txt=document.getElementById("filterText");if(box&&txt){if(v==="Semua")box.classList.add("hidden");else{txt.textContent="Filter: "+v;box.classList.remove("hidden")}}renderProducts();document.getElementById("produk")?.scrollIntoView({behavior:"smooth"})}
@@ -27,6 +27,6 @@ updateCartCount();renderProducts();
 function renderCategory(category){
  const grid=document.getElementById('categoryProducts'); if(!grid)return;
  const list=products.filter(p=>p.category===category);
- grid.innerHTML=list.map(p=>`<article class="inner-card" onclick="openProduct(${p.id})" style="cursor:pointer"><img src="${p.image}" alt="${p.name}"><div><span class="mini">${p.category.toUpperCase()}</span><h3>${p.name}</h3><p>${p.desc}</p><b>${rupiah(p.price)}</b><div style="margin-top:12px"><span class="btn primary">Lihat Detail</span></div></div></article>`).join('');
+ grid.innerHTML=list.map(p=>`<article class="inner-card" onclick="openProduct(${p.id})" style="cursor:pointer"><img src="./${p.image}" alt="${p.name}"><div><span class="mini">${p.category.toUpperCase()}</span><h3>${p.name}</h3><p>${p.desc}</p><b>${rupiah(p.price)}</b><div style="margin-top:12px"><span class="btn primary">Lihat Detail</span></div></div></article>`).join('');
  if(!list.length)grid.innerHTML='<p>Belum ada produk pada kategori ini.</p>';
 }
