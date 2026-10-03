@@ -248,3 +248,10 @@ footer{margin-top:55px;background:#070707;color:#aaa;border-top:3px solid var(--
 .wa-float{background:#16b95f!important;box-shadow:0 10px 28px rgba(0,0,0,.25)}
 @media(max-width:760px){.premium-banner:after{padding:55px 20px 18px;font-size:25px}.premium-banner:before{right:14px;bottom:14px;font-size:8px;padding:8px 10px}.section-title h2{font-size:21px}.quick{border-radius:12px}.quick div{padding:14px}.cats{border-radius:14px}.sale{border-radius:15px}.sale-head,.sale-body{padding:17px}.card{border-radius:12px}.products{gap:8px}}
 @media(max-width:480px){.premium-banner:after{font-size:21px}.premium-banner:before{display:none}.section{margin-top:24px}.section-title h2{font-size:19px}.sale-head h2{font-size:19px}}
+
+/* ===== HOMEPAGE FOOTER ALIGNMENT FIX ===== */
+.footer-grid-home{grid-template-columns:2fr 1fr 1fr 1fr!important;gap:42px}
+.footer-grid-home>div{min-width:0}
+.footer-grid-home .footer-logo img{max-width:230px}
+@media(max-width:760px){.footer-grid-home{grid-template-columns:1fr 1fr!important;gap:28px 24px}.footer-grid-home>div:first-child{grid-column:1/-1}}
+@media(max-width:480px){.footer-grid-home{grid-template-columns:1fr!important;gap:18px}.footer-grid-home>div:first-child{grid-column:auto}}
