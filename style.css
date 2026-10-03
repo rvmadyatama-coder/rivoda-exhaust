@@ -87,7 +87,7 @@ footer{margin-top:30px;background:#171717;color:#bbb}.footer-grid{display:grid;g
   .category-nav::-webkit-scrollbar{display:none}
   .category-nav a{flex:0 0 auto;font-size:11px;padding:8px 0}
 
-  .premium-banner{margin-top:12px;border-radius:12px;aspect-ratio:16/9;height:auto;min-height:0}
+  .premium-banner{margin-top:12px;border-radius:12px;aspect-ratio:16/5;height:auto;min-height:0}
   .banner-hotspot{left:4%;bottom:7%;width:34%;height:17%;border-radius:8px}
 
   .quick{grid-template-columns:1fr 1fr;margin-top:10px}
@@ -213,7 +213,7 @@ footer{margin-top:30px;background:#171717;color:#bbb}.footer-grid{display:grid;g
   .cart{font-size:20px}
   .category-nav{gap:16px}
   .category-nav a{font-size:10px}
-  .premium-banner{aspect-ratio:16/10}
+  .premium-banner{aspect-ratio:16/5}
   .products{gap:6px}
   .card-body{padding:7px}
   .card-name{font-size:10px}

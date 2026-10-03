@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rivodaexhaust.id/sitemap.xml
