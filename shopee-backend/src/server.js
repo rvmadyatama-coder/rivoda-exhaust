@@ -14,14 +14,18 @@ const PARTNER_ID=String(process.env.PARTNER_ID||''); const PARTNER_KEY=String(pr
 const REDIRECT_URL=String(process.env.REDIRECT_URL||''); const BASE='https://partner.shopeemobile.com';
 const authFile=path.join(DATA_DIR,'shopee-auth.json'), productsFile=path.join(DATA_DIR,'products.json');
 const categoriesFile=path.join(DATA_DIR,'category-map.json');
-let auth=null, products=[], lastSync=null, syncError=null, syncing=false;
+let auth=null, products=[], lastSync=null, syncError=null, syncing=false, oauthState=null;
 try{auth=JSON.parse(await fs.readFile(authFile,'utf8'));}catch{}
 try{products=JSON.parse(await fs.readFile(productsFile,'utf8')).products||[];lastSync=JSON.parse(await fs.readFile(productsFile,'utf8')).lastSync||null;}catch{}
 let categoryMap={sku:{'RVD-KT01-BT':'Knalpot Konsep Titanium','RVD-KT02-UK':'Knalpot Harian','RVD-HFS01-PL':'Knalpot Harian','RVD-HFS01-BK':'Knalpot Custom'},category_id:{}}; try{categoryMap={...categoryMap,...JSON.parse(await fs.readFile(categoriesFile,'utf8'))};}catch{}
 const now=()=>Math.floor(Date.now()/1000);
 const sign=(pathName,timestamp,token='',shopId='')=>crypto.createHmac('sha256',PARTNER_KEY).update(`${PARTNER_ID}${pathName}${timestamp}${token}${shopId}`).digest('hex');
 function assertConfig(){if(!PARTNER_ID||!PARTNER_KEY||!REDIRECT_URL)throw new Error('PARTNER_ID, PARTNER_KEY, dan REDIRECT_URL harus diisi di environment backend.');}
-async function writeJson(file,obj){await fs.writeFile(file,JSON.stringify(obj,null,2),'utf8');}
+async function writeJson(file,obj){
+ const tmp=`${file}.${process.pid}.tmp`;
+ await fs.writeFile(tmp,JSON.stringify(obj,null,2),'utf8');
+ await fs.rename(tmp,file);
+}
 async function signedRequest(apiPath,{method='GET',body,params={},shop=true}={}){
   assertConfig(); if(!auth?.access_token||!auth?.shop_id)throw new Error('Toko Shopee belum diotorisasi. Buka /auth/shopee.');
   const ts=now(), token=auth.access_token, shopId=String(auth.shop_id), signature=sign(apiPath,ts,token,shopId);
@@ -56,13 +60,23 @@ async function syncProducts(){if(syncing)return;syncing=true;syncError=null;
     const desc=String(item.description||'').trim();const id=String(item.item_id);const shopId=String(auth.shop_id);
     all.push({id:Number(item.item_id),itemId:id,name:item.item_name||'Produk RIVODA EXHAUST',category:categoryFor(item),tags:[categoryFor(item)],price,stock:item.has_model?modelStocks.reduce((n,m)=>n+m.stock,0):stockOf(item),weight:Number(item.weight||0),sku:item.item_sku||id,rating:null,sold:null,variations,models:modelStocks,image:imgs[0]||'',images:imgs,desc:desc.slice(0,500)||'Produk resmi RIVODA EXHAUST. Hubungi admin untuk detail kecocokan kendaraan.',detail:desc||'Produk resmi RIVODA EXHAUST.',shopeeUrl:`https://shopee.co.id/product/${shopId}/${id}`,status:item.item_status,updatedAt:item.update_time||null});
   }}
+  if(ids.length===0 && products.length>0){throw new Error('Shopee mengembalikan 0 produk. Katalog lama dipertahankan untuk mencegah penghapusan massal.');}
   products=all;lastSync=new Date().toISOString();await writeJson(productsFile,{products,lastSync,shopName:'Shopee RIVODA EXHAUST'});
  }catch(e){syncError=e.message;console.error('SYNC ERROR:',e.message);}finally{syncing=false;}
 }
 app.get('/health',(req,res)=>res.json({ok:true,service:'RIVODA Shopee Product Sync',authorized:Boolean(auth?.access_token),productCount:products.length,lastSync,syncing,syncError}));
 app.get('/api/products',(req,res)=>res.set('Cache-Control','no-store').json({products,lastSync,shopName:'Shopee RIVODA EXHAUST',source:'Shopee Open Platform'}));
-app.get('/auth/shopee',(req,res)=>{try{assertConfig();const apiPath='/api/v2/shop/auth_partner',ts=now(),sig=sign(apiPath,ts);const url=new URL(BASE+apiPath);url.searchParams.set('partner_id',PARTNER_ID);url.searchParams.set('timestamp',String(ts));url.searchParams.set('sign',sig);url.searchParams.set('redirect',REDIRECT_URL);res.redirect(url.toString());}catch(e){res.status(500).send(e.message);}});
-app.get('/auth/shopee/callback',async(req,res)=>{try{assertConfig();const {code,shop_id}=req.query;if(!code||!shop_id)throw new Error('Callback tidak berisi code atau shop_id.');const apiPath='/api/v2/auth/token/get',ts=now(),sig=sign(apiPath,ts);const url=new URL(BASE+apiPath);url.searchParams.set('partner_id',PARTNER_ID);url.searchParams.set('timestamp',String(ts));url.searchParams.set('sign',sig);
+app.get('/auth/shopee',(req,res)=>{try{
+ assertConfig();
+ oauthState=crypto.randomBytes(24).toString('hex');
+ const apiPath='/api/v2/shop/auth_partner',ts=now(),sig=sign(apiPath,ts);
+ const url=new URL(BASE+apiPath);
+ url.searchParams.set('partner_id',PARTNER_ID);url.searchParams.set('timestamp',String(ts));
+ url.searchParams.set('sign',sig);url.searchParams.set('redirect',REDIRECT_URL);
+ url.searchParams.set('state',oauthState);
+ res.redirect(url.toString());
+}catch(e){res.status(500).send(e.message);}});
+app.get('/auth/shopee/callback',async(req,res)=>{try{assertConfig();const {code,shop_id,state}=req.query;if(!code||!shop_id)throw new Error('Callback tidak berisi code atau shop_id.');if(!oauthState||!state||String(state)!==oauthState)throw new Error('Validasi OAuth state gagal. Ulangi proses otorisasi dari /auth/shopee.');oauthState=null;const apiPath='/api/v2/auth/token/get',ts=now(),sig=sign(apiPath,ts);const url=new URL(BASE+apiPath);url.searchParams.set('partner_id',PARTNER_ID);url.searchParams.set('timestamp',String(ts));url.searchParams.set('sign',sig);
  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:String(code),partner_id:Number(PARTNER_ID),shop_id:Number(shop_id)})});const d=await r.json();if(!r.ok||d.error)throw new Error(d.message||d.error||'Gagal mengambil token.');auth={...d,shop_id:String(shop_id),updated_at:new Date().toISOString()};await writeJson(authFile,auth);await syncProducts();res.send('<h2>Otorisasi Shopee berhasil</h2><p>Toko telah dihubungkan. Sinkronisasi produk dimulai. Anda dapat menutup halaman ini.</p>');
  }catch(e){res.status(400).send(`Otorisasi gagal: ${e.message}`);}});
 app.post('/admin/sync',async(req,res)=>{if(!process.env.SYNC_SECRET||req.headers['x-sync-secret']!==process.env.SYNC_SECRET)return res.status(401).json({error:'Unauthorized'});await syncProducts();res.json({ok:!syncError,lastSync,productCount:products.length,error:syncError});});
