@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: rivoda-shopee-sync
+    runtime: node
+    plan: starter
+    rootDir: ./shopee-backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    disk:
+      name: rivoda-shopee-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: SYNC_INTERVAL_MINUTES
+        value: "10"
+      - key: PUBLIC_SITE_ORIGIN
+        value: https://rivodaexhaust.id,https://www.rivodaexhaust.id
+      - key: REDIRECT_URL
+        value: https://api.rivodaexhaust.id/auth/shopee/callback
+      - key: PARTNER_ID
+        sync: false
+      - key: PARTNER_KEY
+        sync: false
+      - key: SYNC_SECRET
+        generateValue: true
